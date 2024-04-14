@@ -6,7 +6,7 @@
 				class="h-[90px] object-scale-down"
 				alt="nike logo"
 			/>
-			<NuxtLink
+			<NuxtLink to="/third-party"
 				><span class="underline">Nike Uzbekistan</span>
 				<Icon name="radix-icons:arrow-top-right"
 			/></NuxtLink>
@@ -17,7 +17,7 @@
 				class="h-[90px] object-scale-down"
 				alt="nike logo"
 			/>
-			<NuxtLink
+			<NuxtLink to="/third-party"
 				><span class="underline">Vicco.uz</span>
 				<Icon name="radix-icons:arrow-top-right"
 			/></NuxtLink>
@@ -28,7 +28,7 @@
 				class="h-[90px] object-scale-down"
 				alt="nike logo"
 			/>
-			<NuxtLink
+			<NuxtLink to="/third-party"
 				><span class="underline">Terra Pro</span>
 				<Icon name="radix-icons:arrow-top-right"
 			/></NuxtLink>
@@ -39,7 +39,7 @@
 				class="h-[90px] object-scale-down"
 				alt="nike logo"
 			/>
-			<NuxtLink
+			<NuxtLink to="/third-party"
 				><span class="underline">Adidas Uzbekistan</span>
 				<Icon name="radix-icons:arrow-top-right"
 			/></NuxtLink>
