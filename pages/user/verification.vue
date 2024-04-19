@@ -3,7 +3,7 @@ const passportBase64 = ref();
 const selfieBase64 = ref();
 
 const { requestData, loading: uploadImageLoading } = useApi();
-
+const error = ref("");
 const response = ref();
 const uploadImage = async () => {
 	const formData = new FormData();
@@ -17,8 +17,10 @@ const uploadImage = async () => {
 		});
 
 		navigateTo("/user/add-card");
-	} catch (error) {
-		console.log(error);
+	} catch (err) {
+		if (err.errors && err.errors.length > 0) {
+			error.value = err.errors[0];
+		}
 	}
 };
 
@@ -33,7 +35,10 @@ definePageMeta({
 		<form
 			class="py-7 gap-y-4 w-[460px] px-4 flex flex-col rounded-2xl justify-center border"
 		>
-			<h2 class="text-2xl">Verify your identity</h2>
+			<div>
+				<h2 class="text-2xl">Verify your identity</h2>
+				<p class="text-sm text-red-700">{{ error }}</p>
+			</div>
 
 			<FileUpload
 				name="passport"

@@ -30,10 +30,9 @@ definePageMeta({
 			<div class="grid gap-y-2">
 				<label for="" class="text-[25px] font-bold text-gray-900">Salary</label>
 				<input
-					disabled="true"
-					:value="value"
+					v-model="value"
 					class="border-gray-200 disabled:cursor-not-allowed rounded-xl focus:ring-0 placeholder:text-gray-800"
-					type="text"
+					type="number"
 				/>
 			</div>
 			<div>
@@ -59,8 +58,8 @@ definePageMeta({
 		<div v-else class="w-[540px] space-y-8">
 			<h2 class="text-6xl text-center">Congratulations!</h2>
 			<p class="px-8 text-center">
-				Thank you for signing up! Now you can get your purchases up to 10 000
-				000 UZS and pay with Splitbor
+				Thank you for signing up! Now you can get your purchases up to
+				{{ value.toLocaleString() }} UZS and pay with Splitbor
 			</p>
 			<button
 				type="button"

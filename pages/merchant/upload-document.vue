@@ -51,8 +51,8 @@ definePageMeta({
 	<div v-if="complete" class="w-[540px] m-auto mt-20 space-y-8">
 		<h2 class="text-6xl text-center">Congratulations!</h2>
 		<p class="px-8 text-center">
-			Thank you for signing up! Now you can get your purchases up to 10 000 000
-			UZS and pay with Splitbor
+			Thank you for signing up! Now you can add products and start selling with
+			Splitbor!
 		</p>
 		<button
 			@click="$router.push('/merchant/product')"

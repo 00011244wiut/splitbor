@@ -40,6 +40,33 @@ export default function useApi() {
 						}
 					);
 					break;
+				case "PUT":
+					response = await axios.put(
+						`${API_URL}/${endpoint}`,
+						data,
+
+						{
+							params: params,
+							headers: {
+								Authorization: token.value ? `Bearer ${token.value}` : "",
+								"Content-Type": isFile
+									? "multipart/form-data"
+									: "application/json",
+							},
+						}
+					);
+					break;
+				case "DELETE":
+					response = await axios.delete(
+						`${API_URL}/${endpoint}`,
+
+						{
+							headers: {
+								Authorization: token.value ? `Bearer ${token.value}` : "",
+							},
+						}
+					);
+					break;
 
 				default:
 					throw new Error(`Unsupported request method: ${method}`);

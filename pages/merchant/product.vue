@@ -33,10 +33,15 @@ definePageMeta({
 			</button>
 			<p>Add Product</p>
 		</div>
-		<div v-for="product in products" :key="product" class="space-y-4">
+		<div
+			@click="$router.push(`/merchant/edit/${product.id}`)"
+			v-for="product in products"
+			:key="product"
+			class="space-y-4 cursor-pointer h-fit"
+		>
 			<img
 				:src="product.previewPhotoLink"
-				class="object-cover w-[250px] h-[220px]"
+				class="object-cover w-[250px] h-[220px] border-2 border-white hover:border-blue-600"
 				alt=""
 			/>
 			<!-- <div

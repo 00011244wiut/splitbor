@@ -1,5 +1,30 @@
 <script setup>
+import { usePurchaseStore } from "@/stores/purchase";
 const open = ref(false);
+
+const { addPurchase } = usePurchaseStore();
+
+const { requestData, loading } = useApi();
+const response = ref();
+const error = ref("");
+
+const createOrder = async () => {
+	const data = {
+		productId: "e899ff27-0348-43fb-be43-94dfece532e8",
+	};
+	try {
+		await requestData("post", "order/create", {
+			params: { ...data },
+		}).then((res) => {
+			response.value = res.data;
+			addPurchase(response.value);
+			navigateTo("/verify-purchase");
+		});
+	} catch (error) {
+		error.value = error;
+		console.log(error);
+	}
+};
 </script>
 <template>
 	<BaseModal autoclose bodyClass="max-w-[600px] w-full" v-model="open">
@@ -72,10 +97,10 @@ const open = ref(false);
 					</div>
 				</div>
 				<button
-					@click="open = false"
+					@click="createOrder()"
 					class="w-full bg-black text-white py-4 rounded-3xl"
 				>
-					Pay Now
+					{{ loading ? "loading..." : "Pay Now" }}
 				</button>
 			</div>
 		</template>
