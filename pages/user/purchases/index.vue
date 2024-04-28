@@ -1,4 +1,6 @@
 <script setup>
+import { format, parseISO } from "date-fns";
+
 definePageMeta({
 	layout: "logged-in",
 });
@@ -54,7 +56,9 @@ onMounted(() => {
 							<p>{{ purchase.productName }}</p>
 							<p>#{{ purchase.id }}</p>
 						</div>
-						<p class="text-xs">Date: {{ purchase.createdTime }}</p>
+						<p class="text-xs">
+							Date: {{ format(parseISO(purchase.createdTime), "yyy MMMM dd") }}
+						</p>
 					</div>
 					<button
 						@click="$router.push(`/user/purchases/${purchase.id}`)"

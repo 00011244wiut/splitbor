@@ -1,9 +1,12 @@
 <script setup>
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
 const passportBase64 = ref();
 const selfieBase64 = ref();
 
 const { requestData, loading: uploadImageLoading } = useApi();
-const error = ref("");
 const response = ref();
 const uploadImage = async () => {
 	const formData = new FormData();
@@ -17,9 +20,14 @@ const uploadImage = async () => {
 		});
 
 		navigateTo("/user/add-card");
-	} catch (err) {
-		if (err.errors && err.errors.length > 0) {
-			error.value = err.errors[0];
+	} catch (error) {
+		if (error.response.data.type == "validation") {
+			notify({
+				title: error.response.data.title,
+				description: error.response.data.errors[0],
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
 		}
 	}
 };
@@ -37,7 +45,6 @@ definePageMeta({
 		>
 			<div>
 				<h2 class="text-2xl">Verify your identity</h2>
-				<p class="text-sm text-red-700">{{ error }}</p>
 			</div>
 
 			<FileUpload

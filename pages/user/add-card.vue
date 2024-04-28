@@ -1,4 +1,8 @@
 <script setup>
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
 const { requestData, loading: addCardLoading } = useApi();
 
 const input = ref({ cardType: 0, cardNumber: "", expiryDate: "", cvv: "" });
@@ -12,7 +16,14 @@ const addCard = async () => {
 
 		navigateTo("/user/scoring");
 	} catch (error) {
-		console.log(error);
+		if (error.response.data.type == "validation") {
+			notify({
+				title: error.response.data.title,
+				description: error.response.data.errors[0],
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		}
 	}
 };
 
@@ -48,7 +59,7 @@ definePageMeta({
 				<label for="" class="text-[15px] text-gray-900">Expiry date</label>
 				<input
 					class="border-gray-200 rounded-xl focus:ring-0 placeholder:text-gray-800"
-					type="date"
+					type="text"
 					name="expiryDate"
 					v-model="input.expiryDate"
 					placeholder="06/24"

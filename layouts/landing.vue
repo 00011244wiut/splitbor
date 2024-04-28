@@ -1,4 +1,5 @@
 <template>
+	<Notify />
 	<div class="pt-2 mb-6 space-y-8">
 		<div class="flex items-center justify-between px-16">
 			<img

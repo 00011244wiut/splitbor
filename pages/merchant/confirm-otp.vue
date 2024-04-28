@@ -1,6 +1,11 @@
 <script setup>
 import { useOtpStore } from "@/stores/otp.js";
-const { otp, phoneNumber } = useOtpStore();
+const { phoneNumber } = useOtpStore();
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
+const otp = ref();
 
 const token = useCookie("access-token");
 
@@ -10,7 +15,7 @@ const response = ref();
 const verify = async () => {
 	const data = {
 		phoneNumber: phoneNumber,
-		sampleOtp: otp,
+		sampleOtp: otp.value,
 	};
 	try {
 		response.value = await requestData("post", "merchant/otp/verify", {
@@ -21,12 +26,22 @@ const verify = async () => {
 
 		if (response.value?.data?.merchant.merchantStatus === "Complete") {
 			navigateTo("/merchant/product");
+			addUser();
+
 			return;
 		}
+		addUser();
 
 		navigateTo("/merchant/add-name");
 	} catch (error) {
-		console.log(error);
+		if (error.response.data.title == "Invalid OTP") {
+			notify({
+				title: error.response.data.title,
+				description: "The otp is Invalid",
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		}
 	}
 };
 

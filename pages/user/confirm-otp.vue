@@ -1,8 +1,17 @@
 <script setup>
 import { useOtpStore } from "@/stores/otp.js";
-const { otp, phoneNumber } = useOtpStore();
+import { useAuthStore } from "@/stores/auth.js";
+
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
+const { phoneNumber } = useOtpStore();
+const { addUser } = useAuthStore();
 
 const token = useCookie("access-token");
+
+const otp = ref();
 
 const { requestData, loading: verifyLoading } = useApi();
 
@@ -10,7 +19,7 @@ const response = ref();
 const verify = async () => {
 	const data = {
 		phoneNumber: phoneNumber,
-		sampleOtp: otp,
+		sampleOtp: otp.value,
 	};
 	try {
 		response.value = await requestData("post", "otp/verify", {
@@ -20,11 +29,21 @@ const verify = async () => {
 		token.value = response.value?.data?.accessToken;
 		if (response.value?.data?.user.userState === "CompleteProfile") {
 			navigateTo("/user/purchases");
+			addUser();
+
 			return;
 		}
+		addUser();
 		navigateTo("/user/add-name");
 	} catch (error) {
-		console.log(error);
+		if (error.response.data.title == "Invalid OTP") {
+			notify({
+				title: error.response.data.title,
+				description: "The otp is Invalid",
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		}
 	}
 };
 

@@ -1,6 +1,12 @@
 <script setup>
 import { usePurchaseStore } from "@/stores/purchase";
+import { useAuthStore } from "@/stores/auth.js";
+import { storeToRefs } from "pinia";
+
 const open = ref(false);
+
+const authStore = useAuthStore();
+const { isLoggedIn } = storeToRefs(authStore);
 
 const { addPurchase } = usePurchaseStore();
 
@@ -13,10 +19,14 @@ const createOrder = async () => {
 		productId: "e899ff27-0348-43fb-be43-94dfece532e8",
 	};
 	try {
-		await requestData("post", "order/create", {
-			params: { ...data },
-		}).then((res) => {
-			response.value = res.data;
+		await requestData(
+			"post",
+			isLoggedIn.value ? "order/create" : "order/create_demo",
+			{
+				params: { ...data },
+			}
+		).then((res) => {
+			response.value = res;
 			addPurchase(response.value);
 			navigateTo("/verify-purchase");
 		});

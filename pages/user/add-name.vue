@@ -1,4 +1,8 @@
 <script setup>
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
 const { requestData, loading: updateProfileLoading } = useApi();
 
 const data = ref({});
@@ -12,7 +16,14 @@ const updateProfile = async () => {
 
 		navigateTo("/user/verification");
 	} catch (error) {
-		console.log(error);
+		if (error.response.data.type == "validation") {
+			notify({
+				title: error.response.data.title,
+				description: error.response.data.errors[0],
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		}
 	}
 };
 

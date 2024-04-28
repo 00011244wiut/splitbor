@@ -1,4 +1,8 @@
 <script setup>
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
 const { requestData, loading: addInfoLoading } = useApi();
 
 const data = ref({});
@@ -13,7 +17,24 @@ const addInfo = async () => {
 			navigateTo("/merchant/upload-document");
 		});
 	} catch (error) {
-		console.log(error);
+		if (
+			error.response.data.type ==
+			"https://tools.ietf.org/html/rfc9110#section-15.5.1"
+		) {
+			notify({
+				title: error.response.data.title,
+				description: "Remaining required field",
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		} else if (error.response.data.type == "validation") {
+			notify({
+				title: error.response.data.title,
+				description: error.response.data.errors[0],
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		}
 	}
 };
 

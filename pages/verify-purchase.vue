@@ -1,5 +1,15 @@
 <script setup>
+import useNotify from "@/use/notify";
+
+const { notify } = useNotify();
+
+import { useAuthStore } from "@/stores/auth";
+import { storeToRefs } from "pinia";
+
 import { format, parseISO } from "date-fns";
+
+const authStore = useAuthStore();
+const { isLoggedIn } = storeToRefs(authStore);
 
 import { usePurchaseStore } from "@/stores/purchase";
 const { purchase } = usePurchaseStore();
@@ -8,7 +18,7 @@ const { requestData, loading } = useApi();
 
 const verifyOrder = async () => {
 	const data = {
-		PurchaseId: purchase.purchaseId,
+		PurchaseId: purchase.data.purchaseId,
 		CardId: "7b18f4db-4e24-49bf-969a-7908832f847e",
 	};
 	try {
@@ -18,10 +28,26 @@ const verifyOrder = async () => {
 			navigateTo("/user/purchases");
 		});
 	} catch (error) {
-		error.value = error;
-		console.log(error);
+		if (error.response.data.type == "BadRequestException") {
+			notify({
+				title: error.response.data.title,
+				type: "error",
+				borderClass: "border-l-[16px] border-red-300",
+			});
+		}
 	}
 };
+
+onMounted(() => {
+	if (isLoggedIn.value && purchase.success == false) {
+		notify({
+			title: "Finish account setup",
+			description: "You must Finish Account setup in order to continue",
+			type: "error",
+			borderClass: "border-l-[16px] border-red-300",
+		});
+	}
+});
 
 definePageMeta({
 	layout: "logged-in",
@@ -29,7 +55,7 @@ definePageMeta({
 </script>
 
 <template>
-	<div class="w-full px-[400px] pt-8 grid">
+	<div class="w-full px-[200px] pt-8 grid grid-cols-2">
 		<div class="space-y-6">
 			<div>
 				<h1 class="font-bold text-[42px]">Nike Downshifter 13</h1>
@@ -46,7 +72,7 @@ definePageMeta({
 				>
 					<div
 						class="space-y-2"
-						v-for="(item, index) in purchase.schedule"
+						v-for="(item, index) in purchase.data.schedule"
 						:key="index"
 					>
 						<div
@@ -69,12 +95,33 @@ definePageMeta({
 			</div>
 			<div class="space-y-2">
 				<button
-					@click="verifyOrder"
+					v-if="purchase.success"
+					@click="verifyOrder()"
 					class="bg-[#428BF9] font-medium text-white w-full py-4 rounded-3xl"
 				>
 					{{ loading ? "Confirming..." : "Confirm" }}
 				</button>
 			</div>
+		</div>
+		<div
+			v-if="!purchase.success && !isLoggedIn"
+			class="flex gap-x-2 text-3xl items-center justify-center"
+		>
+			You need to
+			<NuxtLink to="/user/sign-up" class="text-[#428BF9] underline"
+				>sign in</NuxtLink
+			>
+			to complete order
+		</div>
+		<div
+			v-else-if="!purchase.success"
+			class="flex gap-x-2 text-3xl items-center justify-center"
+		>
+			You need to
+			<NuxtLink to="/user/verification" class="text-[#428BF9] underline"
+				>Finish your profile</NuxtLink
+			>
+			to complete order
 		</div>
 	</div>
 </template>
