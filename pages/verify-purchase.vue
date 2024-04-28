@@ -15,11 +15,11 @@ import { usePurchaseStore } from "@/stores/purchase";
 const { purchase } = usePurchaseStore();
 
 const { requestData, loading } = useApi();
-
+const CardId = ref("");
 const verifyOrder = async () => {
 	const data = {
 		PurchaseId: purchase.data.purchaseId,
-		CardId: "7b18f4db-4e24-49bf-969a-7908832f847e",
+		CardId: CardId.value,
 	};
 	try {
 		await requestData("post", "order/confirm", {
@@ -38,6 +38,20 @@ const verifyOrder = async () => {
 	}
 };
 
+const { requestData: getLimit, loading: getLimitLoading } = useApi();
+
+const userData = ref({});
+const getUserData = async () => {
+	try {
+		await getLimit("get", "user/getUserInfo").then(({ data }) => {
+			CardId.value = data.cardEntity.id;
+			userData.value = data;
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 onMounted(() => {
 	if (isLoggedIn.value && purchase.success == false) {
 		notify({
@@ -46,6 +60,8 @@ onMounted(() => {
 			type: "error",
 			borderClass: "border-l-[16px] border-red-300",
 		});
+	} else {
+		getUserData();
 	}
 });
 
@@ -122,6 +138,10 @@ definePageMeta({
 				>Finish your profile</NuxtLink
 			>
 			to complete order
+		</div>
+		<div v-else class="flex flex-col gap-y-2 ml-40 justify-center">
+			<p class="text-base">Card Type: {{ userData.cardEntity.cardType }}</p>
+			<p class="text-base">Card Number: {{ userData.cardEntity.cardNumber }}</p>
 		</div>
 	</div>
 </template>
