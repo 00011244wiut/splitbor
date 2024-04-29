@@ -104,7 +104,7 @@ definePageMeta({
 					@click.prevent="addInfo()"
 					class="!w-full py-3 text-sm text-center bg-black text-white rounded-lg"
 				>
-					{{ addInfoLoading ? "Adding.." : "Add" }}
+					{{ addInfoLoading ? "Checking..." : "Check" }}
 				</button>
 			</form>
 			<div class="grid h-full w-full place-content-center mt-16 gap-y-8">
@@ -130,7 +130,7 @@ definePageMeta({
 						@click.prevent="confirmInfo()"
 						class="w-[400px] px-6 py-3 text-sm text-center bg-[#1573FF] text-white rounded-lg"
 					>
-						{{ confirmInfoLoading ? "Verifying.." : "Verify" }}
+						{{ confirmInfoLoading ? "Submitting..." : "Submit" }}
 					</button>
 				</div>
 			</div>

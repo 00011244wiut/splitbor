@@ -52,7 +52,7 @@ definePageMeta({
 					type="text"
 					v-model="input.cardNumber"
 					name="cardNumber"
-					placeholder="5555 5555 5555 5555"
+					placeholder="16 digit PAN"
 				/>
 			</div>
 			<div class="grid gap-y-2">
@@ -62,7 +62,7 @@ definePageMeta({
 					type="text"
 					name="expiryDate"
 					v-model="input.expiryDate"
-					placeholder="06/24"
+					placeholder="mm/yy"
 				/>
 			</div>
 			<div class="grid gap-y-2">
@@ -72,7 +72,7 @@ definePageMeta({
 					class="border-gray-200 rounded-xl focus:ring-0 placeholder:text-gray-800"
 					type="text"
 					name="cvv"
-					placeholder=""
+					placeholder="***"
 				/>
 			</div>
 			<button
