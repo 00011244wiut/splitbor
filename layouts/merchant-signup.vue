@@ -5,12 +5,12 @@
 		<div class="flex items-center justify-between px-16">
 			<img
 				@click="$router.push('/')"
-				src="/static-images/logo.png"
+				src="/static-images/splitbor-business.png"
 				class="object-cover h-[54px]"
 				alt="logo"
 			/>
 
-			<NuxtLink to="/user/sign-up" class="text-base text-gray-950"
+			<NuxtLink to="/merchant/sign-up" class="text-base text-gray-950"
 				>Sign in</NuxtLink
 			>
 		</div>

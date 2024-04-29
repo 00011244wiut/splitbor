@@ -1,7 +1,7 @@
 import axios from "axios";
 const token = useCookie("access-token");
 
-const API_URL = "https://bnpl-qmob.onrender.com";
+const API_URL = "http://localhost:5064";
 
 export default function useApi() {
 	const loading = ref(false); // Initialize a loading ref

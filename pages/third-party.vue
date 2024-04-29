@@ -16,7 +16,7 @@ const error = ref("");
 
 const createOrder = async () => {
 	const data = {
-		productId: "ca7f38bb-21de-4c8f-ada7-dbf8abf9fa41",
+		productId: "9bd069e6-e25e-460b-9ffe-4c84e0647146",
 	};
 	try {
 		await requestData(

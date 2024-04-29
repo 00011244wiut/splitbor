@@ -59,6 +59,11 @@ definePageMeta({
 			>
 				{{ signUpLoading ? "Signing..." : "Sign up" }}
 			</button>
+			<p class="text-[15px] text-gray-900 mt-2 text-center">
+    By signing up, you agree with the <br>
+    <a href="/privacy" class="text-blue-600 hover:text-blue-800">Purchase and Registration Terms and Conditions</a>.
+</p>
+
 		</form>
 	</div>
 </template>

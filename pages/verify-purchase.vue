@@ -12,8 +12,11 @@ const authStore = useAuthStore();
 const { isLoggedIn } = storeToRefs(authStore);
 
 import { usePurchaseStore } from "@/stores/purchase";
+import Product from "./merchant/product.vue";
 const { purchase } = usePurchaseStore();
-
+let cards = ref([
+	{ id: "card", name: "Pending..." },
+]);
 const { requestData, loading } = useApi();
 const CardId = ref("");
 const verifyOrder = async () => {
@@ -46,6 +49,11 @@ const getUserData = async () => {
 		await getLimit("get", "user/getUserInfo").then(({ data }) => {
 			CardId.value = data.cardEntity.id;
 			userData.value = data;
+			let cardDisplay = `${data.cardEntity.cardType} ${data.cardEntity.cardNumber}`;
+			cards = ref([
+				{ id: "card", name: cardDisplay },
+			]);
+
 		});
 	} catch (error) {
 		console.log(error);
@@ -74,8 +82,9 @@ definePageMeta({
 	<div class="w-full px-[200px] pt-8 grid grid-cols-2">
 		<div class="space-y-6">
 			<div>
-				<h1 class="font-bold text-[42px]">Nike Downshifter 13</h1>
-				<p class="text-[22px]">OrderId: Men Running Shoes</p>
+				<h1 class="font-bold text-[42px]">{{purchase.data.product.productName}}</h1>
+				<p class="text-[22px]">OrderId: {{purchase.data.purchaseId}}</p>
+				<p class="text-[22px]">Total Amount: {{purchase.data.product.priceAmount}} UZS</p>
 			</div>
 			<h1 class="font-bold text-[22px]">Payment Schedule</h1>
 
@@ -140,8 +149,9 @@ definePageMeta({
 			to complete order
 		</div>
 		<div v-else class="flex flex-col gap-y-2 ml-40 justify-center">
+			<SingleSelect name="cards" :items="cards" />
 			<p class="text-base">Card Type: {{ userData.cardEntity.cardType }}</p>
-			<p class="text-base">Card Number: {{ userData.cardEntity.cardNumber }}</p>
+			<!-- <p class="text-base">Card Number: {{ userData.cardEntity.cardNumber }}</p> -->
 		</div>
 	</div>
 </template>

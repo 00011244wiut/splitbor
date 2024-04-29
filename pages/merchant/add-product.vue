@@ -31,7 +31,7 @@ definePageMeta({
 					v-model="data.productName"
 					class="border-gray-200 rounded-xl focus:ring-0 placeholder:text-gray-300"
 					type="text"
-					placeholder=""
+					placeholder="Enter product name"
 				/>
 			</div>
 			<div class="grid gap-y-2">
@@ -40,7 +40,7 @@ definePageMeta({
 					v-model="data.priceAmount"
 					class="border-gray-200 rounded-xl focus:ring-0 placeholder:text-gray-300"
 					type="number"
-					placeholder=""
+					placeholder="Enter price in UZS"
 				/>
 			</div>
 			<div class="grid gap-y-2">
@@ -49,7 +49,7 @@ definePageMeta({
 					v-model="data.previewPhotoLink"
 					class="border-gray-200 rounded-xl focus:ring-0 placeholder:text-gray-300"
 					type="text"
-					placeholder=""
+					placeholder="Image link for preview"
 				/>
 			</div>
 			<button

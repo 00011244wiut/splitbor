@@ -63,8 +63,8 @@ definePageMeta({
 				<input
 					v-model="otp"
 					class="border-gray-200 rounded-xl focus:ring-0 placeholder:text-gray-300"
-					type="number"
-					placeholder=""
+					type="text"
+					placeholder="Enter your OTP"
 				/>
 			</div>
 			<button

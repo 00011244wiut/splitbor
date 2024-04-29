@@ -39,6 +39,17 @@ onMounted(() => {
 	getPurchase();
 	getPurchaseLimit();
 });
+
+function formatCurrency(value) {
+  // Round the number to the nearest thousand
+  const rounded = Math.round(value / 1000) * 1000;
+  
+  // Convert the number to a string and use a regex to add space as thousand separators
+  const formatted = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  
+  // Return the formatted number with the currency
+  return `${formatted}`;
+}
 </script>
 
 <template>
@@ -83,7 +94,7 @@ onMounted(() => {
 				<h2 class="text-[54px] font-bold">My Purchase Limit</h2>
 				<div class="text-3xl">
 					<span class="text-blue-600">Your purchase limit is:</span>
-					{{ limit.maxAmount }} UZS
+					{{ formatCurrency(limit.maxAmount) }} UZS
 				</div>
 			</div>
 			<div class="space-y-12">

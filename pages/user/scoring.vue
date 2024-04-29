@@ -40,6 +40,18 @@ const complete = ref(false);
 definePageMeta({
 	layout: "logged-in",
 });
+
+function formatCurrency(value) {
+  // Round the number to the nearest thousand
+  const rounded = Math.round(value / 1000) * 1000;
+  
+  // Convert the number to a string and use a regex to add space as thousand separators
+  const formatted = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  
+  // Return the formatted number with the currency
+  return `${formatted}`;
+}
+
 </script>
 
 <template>
@@ -60,13 +72,13 @@ definePageMeta({
 				<input
 					id="default-range"
 					type="range"
-					:min="0"
-					:max="100000000"
+					:min="1000000"
+					:max="25000000"
 					v-model="input.income"
 					class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
 				/>
 				<div class="flex text-[20px] font-bold justify-between">
-					<span>0</span> <span>100 000 000</span>
+					<span>1 000 000</span> <span>25 000 000</span>
 				</div>
 			</div>
 			<div class="grid grid-cols-2 gap-x-12 gap-y-6">
@@ -108,7 +120,7 @@ definePageMeta({
 			<h2 class="text-6xl text-center">Congratulations!</h2>
 			<p class="px-8 text-center">
 				Thank you for signing up! Now you can get your purchases up to
-				<span class="text-blue-600">{{ response.data.maxAmount }} </span>
+				<span class="text-blue-600">{{ formatCurrency(response.data.maxAmount) }} </span>
 				UZS and pay with Splitbor
 			</p>
 			<button

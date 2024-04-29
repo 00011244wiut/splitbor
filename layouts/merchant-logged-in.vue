@@ -33,7 +33,7 @@ onMounted(() => {
 		<div class="flex items-center justify-between px-16">
 			<img
 				@click="$router.push('/')"
-				src="/static-images/logo.png"
+				src="/static-images/splitbor-business.png"
 				class="object-cover cursor-pointer h-[54px]"
 				alt="logo"
 			/>
