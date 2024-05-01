@@ -1,4 +1,12 @@
-# Nuxt 3 Minimal Starter
+![Frontend Banner](https://telegra.ph/file/e5e25dbe2ab94df3164dc.png)
+# Splitbor Frontend
+
+This repository includes all frontend code for our user interfaces.
+
+You can read and learn about related report with primary and secondary research about the BNPL industry in Uzbekistan [here](https://docs.google.com/document/d/1c5u_VMlW8WvlbIM9NAgjzpHo6rCcVXOi/edit?usp=sharing&ouid=107772990378977160799&rtpof=true&sd=true).
+
+
+## Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -73,3 +81,8 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+---
+**Copyright © 2024**  
+*A project undertaken as part of BSc (Hons) Business Information Systems Degree, Westminster International University in Tashkent.*
+
